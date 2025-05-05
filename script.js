@@ -26,10 +26,10 @@ document.getElementById("studentForm").addEventListener("submit",function(e){
 });
 
 function addStudentToTable(student){
-    const row=document.createElement("tr")
+    const row=document.createElement("tr");
     row.innerHTML=
     `<td>${student.name}</td>
      <td>${student.LastName}</td>
-    <td>${student.grade.tofixed(1)}</td>}`;
+    <td>${student.grade(1)}</td>}`;
     tableBody.appendChild(row);
 }
