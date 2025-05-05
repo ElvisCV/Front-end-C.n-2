@@ -18,8 +18,8 @@ document.getElementById("studentForm").addEventListener("submit",function(e){
 
     const students=(name,LastName,grade)
     students.push(students);
-
-    console.log(students)
+    addStudentToTable(student)
+    //console.log(students)
 
     this.reset();
 
