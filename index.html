@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h2>Notas Asignatura Front-End</h2>
+    <form id="studentForm">
+    <div>
+        <label for="name"></label>
+        <input type="text" id="name" required>
+    </div>
+    <div>
+        <label for="LastName">Apellido</label>
+        <input type="text" id="LastName" required>
+    </div>
+    <div>
+        <label for="grade">Notas (1.0 - 7.0)</label>
+        <input type="number" id="grade" step="0.1" min="1" max="7" required>
+    </div>
+    <div>
+        <button type="button">Guardar Estudiante</button>
+    </div>
+    <table id="studentTable" cellpadding="8" cellspacing="0">
+    <thead>
+        <tr>
+            <th>Nombre</th>
+            <th>Apellido</th>
+            <th>Nota</th>
+        </tr>
+    </thead>
+    <tbody>
+            <!--Filas de datos-->
+    </tbody>
+    </table>
+    </form>
+    <script src="script.js"></script>
+</body>
+</html>
