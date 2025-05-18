@@ -1,49 +1,68 @@
-const students=[];
+const students = [];
 
-const tableBody=document.querySelector("#studentsTable tbody");
-const averageDiv=document.getElementById("average");
+const tableBody = document.querySelector("#studentsTable tbody");
+const averageDiv = document.getElementById("average");
 
-document.getElementById("studentForm").addEventListener("submit",function(e){
-    e.preventDefault();
+document.getElementById("studentForm").addEventListener("submit", function (e) {
+  e.preventDefault();
 
-    const name=document.getElementById("name").value.trim();
-    const lastName=document.getElementById("lastName").value.trim();
-    const grade=parseFloat(document.getElementById("grade").value.trim());
+  // Obtener valores
+  const name = document.getElementById("name").value.trim();
+  const lastName = document.getElementById("lastName").value.trim();
+  const gradeValue = document.getElementById("grade").value.trim();
+  const grade = parseFloat(gradeValue);
 
-    if(grade <1 || grade >7 || !name || !lastName || isNaN(grade)){
-    alert("Error Datos Incorrectos")
-    return
-    }
+  // Mostrar u ocultar mensajes de error
+  let valid = true;
 
-    //guardar datos en el Array nuevo
+  // Validaciones personalizadas
+  if (!name) {
+    document.getElementById("nameError").style.display = "block";
+    valid = false;
+  } else {
+    document.getElementById("nameError").style.display = "none";
+  }
 
-    const student={name,lastName,grade};
-    students.push(student);
-     addStudentToTable(student)
-     calcularPromedio()
-   // console.log(students)
+  if (!lastName) {
+    document.getElementById("lastNameError").style.display = "block";
+    valid = false;
+  } else {
+    document.getElementById("lastNameError").style.display = "none";
+  }
 
-    this.reset();
+  if (isNaN(grade) || grade < 1 || grade > 7) {
+    document.getElementById("gradeError").style.display = "block";
+    valid = false;
+  } else {
+    document.getElementById("gradeError").style.display = "none";
+  }
 
+  if (!valid) return;
+
+  const student = { name, lastName, grade };
+  students.push(student);
+  addStudentToTable(student);
+  calcularPromedio();
+
+  this.reset();
 });
 
-function addStudentToTable(student){
-    const row=document.createElement("tr");
-    row.innerHTML=
-    `<td>${student.name}</td>
-     <td>${student.lastName}</td>
-    <td>${student.grade}</td>`;
-   tableBody.appendChild(row);
+function addStudentToTable(student) {
+  const row = document.createElement("tr");
+  row.innerHTML = `
+    <td>${student.name}</td>
+    <td>${student.lastName}</td>
+    <td>${student.grade.toFixed(1)}</td>`;
+  tableBody.appendChild(row);
 }
 
-function calcularPromedio(){
-    if(students.length===0){
-       averageDiv.textContent="Promedio General del Curso:N/A"
-        return;
-    }
-    const total=students.reduce((sum,s)=>sum+s.grade,0);
-    console.log(total)
-    const average=total/students.length;
-    console.log(average)
-    averageDiv.textContent=`Promedio General del Curso: ${average.toFixed(2)}`;
+function calcularPromedio() {
+  if (students.length === 0) {
+    averageDiv.textContent = "Promedio General del Curso: N/A";
+    return;
+  }
+
+  const total = students.reduce((sum, s) => sum + s.grade, 0);
+  const average = total / students.length;
+  averageDiv.textContent = `Promedio General del Curso: ${average.toFixed(2)}`;
 }
