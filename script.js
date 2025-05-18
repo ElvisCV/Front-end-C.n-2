@@ -1,26 +1,27 @@
 const students=[];
 
-const tableBody=document.querySelector("#studentsTable tbobdy");
-const averageDIV=document.getElementById("average")
+const tableBody=document.querySelector("#studentsTable tbody");
+const averageDiv=document.getElementById("average");
 
 document.getElementById("studentForm").addEventListener("submit",function(e){
     e.preventDefault();
 
     const name=document.getElementById("name").value.trim();
-    const LastName=document.getElementById("LastName").value.trim();
-    const grade=document.getElementById("grade").value.trim();
+    const lastName=document.getElementById("lastName").value.trim();
+    const grade=parseFloat(document.getElementById("grade").value.trim());
 
-    if(grade <1 || grade >7){
-    alert("Errror Datos Incorrectos")
+    if(grade <1 || grade >7 || !name || !lastName || isNaN(grade)){
+    alert("Error Datos Incorrectos")
     return
     }
 
-    //guardar datos en el Array
+    //guardar datos en el Array nuevo
 
-    const students=(name,LastName,grade)
-    students.push(students);
+    const student={name,lastName,grade};
+    students.push(student);
      addStudentToTable(student)
-    //console.log(students)
+     calcularPromedio()
+   // console.log(students)
 
     this.reset();
 
@@ -30,17 +31,19 @@ function addStudentToTable(student){
     const row=document.createElement("tr");
     row.innerHTML=
     `<td>${student.name}</td>
-     <td>${student.LastName}</td>
-    <td>${student.grade(1)}</td>}`;
-    tableBody.appendChild(row);
+     <td>${student.lastName}</td>
+    <td>${student.grade}</td>`;
+   tableBody.appendChild(row);
 }
 
-function calcularPromedio{}{
-    if(students, length===0){
-        averageDIV.textContent="Promedio General del Curso:N/A"
-         return;    
+function calcularPromedio(){
+    if(students.length===0){
+       averageDiv.textContent="Promedio General del Curso:N/A"
+        return;
     }
     const total=students.reduce((sum,s)=>sum+s.grade,0);
+    console.log(total)
     const average=total/students.length;
-    averageDIV.textContent='Promedio General del curso:' $(average.toFixed(2));
+    console.log(average)
+    averageDiv.textContent=`Promedio General del Curso: ${average.toFixed(2)}`;
 }
