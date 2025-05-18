@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Notas Front-End</title>
+  <style>
     * {
       box-sizing: border-box;
     }
@@ -102,39 +102,45 @@
         padding: 10px;
       }
     }
-    </style>
+  </style>
 </head>
 <body>
-    <h2>Notas Asignatura Front-End</h2>
+  <h2>Notas Asignatura Front-End</h2>
 
-     <div id="average">Promedio General del Curso: N/A </div>
-    <form id="studentForm">
+  <div id="average">Promedio General del Curso: N/A</div>
+
+  <form id="studentForm" novalidate>
     <div>
-        <label for="name">Nombre : </label>
-        <input type="text" id="name" required>
+      <label for="name">Nombre:</label>
+      <input type="text" id="name" required />
+      <div class="error" id="nameError">Por favor, ingresa un nombre válido.</div>
     </div>
     <div>
-        <label for="lastName">Apellido : </label>
-        <input type="text" id="lastName" required>
+      <label for="lastName">Apellido:</label>
+      <input type="text" id="lastName" required />
+      <div class="error" id="lastNameError">Por favor, ingresa un apellido válido.</div>
     </div>
     <div>
-        <label for="grade"> Nota (1.0 - 7.0) : </label>
-        <input type="number" id="grade" step="0.1" min="1" max="7" required>
+      <label for="grade">Nota (1.0 - 7.0):</label>
+      <input type="number" id="grade" step="0.1" min="1" max="7" required />
+      <div class="error" id="gradeError">Por favor, ingresa una nota entre 1.0 y 7.0.</div>
     </div>
-      <button type="submit"> Guardar Estudiante</button>
-    </form>
-<table id="studentsTable" border=1 cellpadding="8" cellspacing="0">
-<thead>
-    <tr>
+    <button type="submit">Guardar Estudiante</button>
+  </form>
+
+  <table id="studentsTable">
+    <thead>
+      <tr>
         <th>Nombre</th>
         <th>Apellido</th>
         <th>Nota</th>
-    </tr>
-</thead>
-<tbody>
-        <!--Filas de datos -->
-</tbody>
-</table>
-    <script src="script.js"></script>
+      </tr>
+    </thead>
+    <tbody>
+      <!--Filas dinámicas-->
+    </tbody>
+  </table>
+
+  <script src="script.js"></script>
 </body>
 </html>
