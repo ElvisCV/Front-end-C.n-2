@@ -1,9 +1,11 @@
 const students = [];
+let editingIndex = null;
 
 const tableBody = document.querySelector("#studentsTable tbody");
 const averageDiv = document.getElementById("average");
+const form = document.getElementById("studentForm");
 
-document.getElementById("studentForm").addEventListener("submit", function (e) {
+form.addEventListener("submit", function (e) {
   e.preventDefault();
 
   // Obtener valores
@@ -40,20 +42,35 @@ document.getElementById("studentForm").addEventListener("submit", function (e) {
   if (!valid) return;
 
   const student = { name, lastName, grade };
-  students.push(student);
-  addStudentToTable(student);
-  calcularPromedio();
 
-  this.reset();
+  if (editingIndex !== null) {
+    students[editingIndex] = student;
+    updateTable();
+    editingIndex = null;
+    form.querySelector("button").textContent = "Guardar Estudiante";
+  } else {
+    students.push(student);
+    addStudentToTable(student, students.length - 1);
+  }
+
+  calcularPromedio();
+  form.reset();
 });
 
-function addStudentToTable(student) {
+function addStudentToTable(student, index) {
   const row = document.createElement("tr");
   row.innerHTML = `
     <td>${student.name}</td>
     <td>${student.lastName}</td>
-    <td>${student.grade.toFixed(1)}</td>`;
+    <td>${student.grade.toFixed(1)}</td>
+    <td><button onclick="editStudent(${index})">Actualizar</button></td>
+  `;
   tableBody.appendChild(row);
+}
+
+function updateTable() {
+  tableBody.innerHTML = "";
+  students.forEach((student, index) => addStudentToTable(student, index));
 }
 
 function calcularPromedio() {
@@ -66,3 +83,12 @@ function calcularPromedio() {
   const average = total / students.length;
   averageDiv.textContent = `Promedio General del Curso: ${average.toFixed(2)}`;
 }
+
+window.editStudent = function(index) {
+  const student = students[index];
+  document.getElementById("name").value = student.name;
+  document.getElementById("lastName").value = student.lastName;
+  document.getElementById("grade").value = student.grade;
+  editingIndex = index;
+  form.querySelector("button").textContent = "Actualizar Estudiante";
+};
