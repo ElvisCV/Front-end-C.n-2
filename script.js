@@ -14,10 +14,10 @@ form.addEventListener("submit", function (e) {
   const gradeValue = document.getElementById("grade").value.trim();
   const grade = parseFloat(gradeValue);
 
-  // Mostrar u ocultar mensajes de error
+  // Validaciones
   let valid = true;
 
-  // Validaciones personalizadas
+    // Validaciones personalizadas
   if (!name) {
     document.getElementById("nameError").style.display = "block";
     valid = false;
@@ -54,6 +54,7 @@ form.addEventListener("submit", function (e) {
   }
 
   calcularPromedio();
+  actualizarEstadisticas();
   form.reset();
 });
 
@@ -63,7 +64,10 @@ function addStudentToTable(student, index) {
     <td>${student.name}</td>
     <td>${student.lastName}</td>
     <td>${student.grade.toFixed(1)}</td>
-    <td><button onclick="editStudent(${index})">Actualizar</button></td>
+    <td>
+      <button onclick="editStudent(${index})">Actualizar</button>
+      <button onclick="deleteStudent(${index})" style="margin-left:5px;">Eliminar</button>
+    </td>
   `;
   tableBody.appendChild(row);
 }
@@ -71,6 +75,7 @@ function addStudentToTable(student, index) {
 function updateTable() {
   tableBody.innerHTML = "";
   students.forEach((student, index) => addStudentToTable(student, index));
+  actualizarEstadisticas();
 }
 
 function calcularPromedio() {
@@ -84,6 +89,16 @@ function calcularPromedio() {
   averageDiv.textContent = `Promedio General del Curso: ${average.toFixed(2)}`;
 }
 
+function actualizarEstadisticas() {
+  const total = students.length;
+  const aprobados = students.filter(s => s.grade >= 4).length;
+  const reprobados = total - aprobados;
+
+  document.getElementById("total").textContent = total;
+  document.getElementById("approved").textContent = aprobados;
+  document.getElementById("failed").textContent = reprobados;
+}
+
 window.editStudent = function(index) {
   const student = students[index];
   document.getElementById("name").value = student.name;
@@ -91,4 +106,11 @@ window.editStudent = function(index) {
   document.getElementById("grade").value = student.grade;
   editingIndex = index;
   form.querySelector("button").textContent = "Actualizar Estudiante";
+};
+
+window.deleteStudent = function(index) {
+  students.splice(index, 1);
+  updateTable();
+  calcularPromedio();
+  actualizarEstadisticas();
 };
